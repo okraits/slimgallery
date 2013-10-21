@@ -1,0 +1,5 @@
+# ignore binary python code
+*.py[cod]
+
+*.db
+*.geany

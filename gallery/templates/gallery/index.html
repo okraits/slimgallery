@@ -1,0 +1,31 @@
+<html>
+<head></head>
+
+<body>
+
+{% load staticfiles %}
+
+{% if album_list %}
+
+	<table>
+
+		<tr>
+
+			{% for album in album_list %}
+
+				<td><a href="{% url 'gallery:index' album.id %}"><img src="{% static "gallery/folder-images.png" %}" alt=""/></a></td>
+
+			{% endfor %}
+
+		</tr>
+
+
+	</table>
+
+
+
+{% endif %}
+
+</body>	
+
+</html>
