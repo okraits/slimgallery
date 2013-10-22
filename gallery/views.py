@@ -2,15 +2,13 @@
 from django.template import loader, Context
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from gallery.models import Folder, Album
+from gallery.models import Folder
 
-def index(request, album_id=None):
+def index(request, folder_id=None):
     folder_list = Folder.objects.all()
-    album_list = Album.objects.all()
-    if album_id is not None:
+    if folder_id is not None:
         context = {'folder_list': folder_list,
-                   'album_list': album_list}
+                   'folder_id': folder_id}
     else:
-        context = {'folder_list': folder_list,
-                   'album_list': album_list}
+        context = {'folder_list': folder_list}
     return render(request, 'gallery/index.html', context)
