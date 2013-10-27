@@ -158,3 +158,8 @@ LOGGING = {
         },
     }
 }
+
+# settings for slimgallery
+# this should be replaced by a media path
+UPLOAD_PATH = STATICFILES_DIRS[0] + 'user/'
+THUMBS_PATH = STATICFILES_DIRS[0] + 'thumbs/'
