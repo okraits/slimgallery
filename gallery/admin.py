@@ -2,7 +2,7 @@ from django.contrib import admin
 import gallery.models
 
 class FolderAdmin(admin.ModelAdmin):
-    list_display = ['caption', 'parentfolder', 'folderpath', 'isAlbum', 'thumbSizeX', 'thumbSizeY', 'thumbQuality']
+    list_display = ['caption', 'parentfolder', 'folderpath', 'isAlbum', 'thumbSizeX', 'thumbSizeY', 'thumbQuality', 'picsPerRow']
     list_filter = ['isAlbum']
     search_fields = ['caption']
 

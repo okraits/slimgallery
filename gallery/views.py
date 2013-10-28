@@ -10,9 +10,22 @@ from os import listdir, mkdir, system
 def index(request, folder_id=None):
     context = {'title': settings.SG_TITLE}
     if folder_id is not None:
-        selectedFolder = Folder.objects.get(id__exact=folder_id)
-    if folder_id is not None and selectedFolder.isAlbum:
-        pass
+        folder = Folder.objects.get(id__exact=folder_id)
+    if folder_id is not None and folder is not None and folder.isAlbum:
+        context['folder'] = folder
+        picfolder_path = settings.SG_UPLOAD_PATH + folder.folderpath + "/"
+        thumbfolder_path = settings.SG_THUMBS_PATH + folder.folderpath + "/"
+        try:
+            piclist = listdir(picfolder_path)
+            context['piclist'] = piclist
+        except (IOError, OSError):
+            return HttpResponseNotFound("Path %s not found." % (picfolder_path))
+        try:
+            thumblist = listdir(thumbfolder_path)
+            context['thumblist'] = thumblist
+        except (IOError, OSError):
+            # no thumbs found for this folder - we have to generate them
+            return HttpResponseNotFound("This error should not happen ;-)")
     else:
         folder_list = Folder.objects.filter(parentfolder=folder_id)
         context['folder_list'] = folder_list

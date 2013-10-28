@@ -24,13 +24,17 @@ table {
  border-collapse:collapse;
  empty-cells:show;
  text-align:center;
- font-size:small;
- /*font-size:x-small;*/
+ /*font-size:small;*/
+ font-size:x-small;
 }
 
 td {
  border-style:solid;
  border-width:1px;
+ padding-left:20px;
+ padding-right:20px;
+ padding-top:20px;
+ padding-bottom:0"px;
 }
 
 //--></style>
@@ -42,26 +46,54 @@ td {
 
 	<h4 class="title">{{ title }}</h4>
 
-	{% if folder_list %}
+	{% if folder and folder.isAlbum %}
 
-		<table align="center" cellpadding="20">
+		{% if thumblist %}
 
-			<tr>
+			<table align="center">
 
-				{% for folder in folder_list %}
+				<tr>
 
-					<td><a href="{% url 'gallery:index' folder.id %}">
-						<img src="{% static "gallery/folder-images.png" %}" alt="folder-images.png"/></a>
-						<p>{{ folder.caption }}</p>
-					</td>
+					{% for pic in piclist %}
 
-				{% endfor %}
+						<td><a href="{% static "user/"|add:folder.folderpath|add:"/"|add:pic %}">
+							<img src="{% static "thumbs/"|add:folder.folderpath|add:"/thumb_"|add:pic %}" alt="{{ pic }}"/></a>
+							<p>{{ pic }}</p>
+						</td>
 
-			</tr>
+					{% endfor %}
+
+				</tr>
 
 
-		</table>
+			</table>
 
+		{% endif %}
+
+	{% else %}
+	
+		{% if folder_list %}
+
+			<table align="center" cellpadding="20">
+
+				<tr>
+
+					{% for folder in folder_list %}
+
+						<td><a href="{% url 'gallery:index' folder.id %}">
+							<img src="{% static "gallery/folder-images.png" %}" alt="folder-images.png"/></a>
+							<p>{{ folder.caption }}</p>
+						</td>
+
+					{% endfor %}
+
+				</tr>
+
+
+			</table>
+
+		{% endif %}
+		
 	{% endif %}
 
 </body>	
