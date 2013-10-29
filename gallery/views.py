@@ -8,7 +8,7 @@ from django.conf import settings
 from os import listdir, mkdir, system
 
 def index(request, folder_id=None):
-    context = {'title': settings.SG_TITLE}
+    context = {}
     if folder_id is not None:
         folder = Folder.objects.get(id__exact=folder_id)
     if folder_id is not None and folder is not None and folder.isAlbum:

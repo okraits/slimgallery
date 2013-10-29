@@ -159,9 +159,6 @@ LOGGING = {
     }
 }
 
-# settings for slimgallery
-SG_TITLE = 'Slimgallery Picture Gallery'
-
 # this should be replaced by a media path
 SG_UPLOAD_PATH = STATICFILES_DIRS[0] + 'user/'
 SG_THUMBS_PATH = STATICFILES_DIRS[0] + 'thumbs/'

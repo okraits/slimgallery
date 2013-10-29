@@ -1,50 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
 
-<html lang="en-EN">
+{% block title %}<h4 class="title">Slimgallery picture gallery</h4>{% endblock %}
 
-<head>
-	<title>Slimgallery</title>
-	<meta name="description" content="Slimgallery picture gallery">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-<style type="text/css"><!--
-
-* {
- font-family:Sans-serif;
-}
-
-.title {
- text-align:center;
- margin-top:50px;
-}
-
-table {
- margin-top:100px;
- border-collapse:collapse;
- empty-cells:show;
- text-align:center;
- /*font-size:small;*/
- font-size:x-small;
-}
-
-td {
- border-style:solid;
- border-width:1px;
- padding-left:20px;
- padding-right:20px;
- padding-top:20px;
- padding-bottom:0"px;
-}
-
-//--></style>
-
-</head>
-
-<body>
 {% load staticfiles %}
 
-	<h4 class="title">{{ title }}</h4>
+{% block content %}
 
 	{% if folder and folder.isAlbum %}
 
@@ -96,6 +56,4 @@ td {
 		
 	{% endif %}
 
-</body>	
-
-</html>
+{% endblock %}
