@@ -1,0 +1,6 @@
+- add image display page with forward, backward, full buttons - use jquery?
+- display image sizes/exif data
+- check number of thumbs and add thumbs for new images
+- enable several layers of folders
+- improve base template layout
+- update README.md: features, requirements, installation
