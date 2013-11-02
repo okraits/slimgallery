@@ -20,6 +20,10 @@
 							<img src="{% static "thumbs/"|add:folder.folderpath|add:"/thumb_"|add:pic %}" alt="{{ pic }}"/></a>
 							<p>{{ pic }}</p>
 						</td>
+						
+						{% if forloop.counter|divisibleby:folder.picsPerRow and not forloop.last %}</tr>
+						<tr>
+						{% endif %}
 
 					{% endfor %}
 
