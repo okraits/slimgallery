@@ -16,7 +16,7 @@
 
 					{% for pic in piclist %}
 
-						<td><a href="{% static "user/"|add:folder.folderpath|add:"/"|add:pic %}">
+						<td><a href="{% url 'gallery:browse' folder.id "pic" %}">
 							<img src="{% static "thumbs/"|add:folder.folderpath|add:"/thumb_"|add:pic %}" alt="{{ pic }}"/></a>
 							<p>{{ pic }}</p>
 						</td>
