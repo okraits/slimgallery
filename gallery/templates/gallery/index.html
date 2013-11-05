@@ -18,7 +18,7 @@
 
 						<td><a href="{% url 'gallery:browse' folder.id "pic" %}">
 							<img src="{% static "thumbs/"|add:folder.folderpath|add:"/thumb_"|add:pic %}" alt="{{ pic }}"/></a>
-							<p>{{ pic }}</p>
+							<p><a href="{% url 'gallery:browse' folder.id "pic" %}">{{ pic }}</a></p>
 						</td>
 						
 						{% if forloop.counter|divisibleby:folder.picsPerRow and not forloop.last %}</tr>
@@ -48,7 +48,7 @@
 
 						<td><a href="{% url 'gallery:index' folder.id %}">
 							<img src="{% static "gallery/folder-images.png" %}" alt="folder-images.png"/></a>
-							<p>{{ folder.caption }}</p>
+							<p><a href="{% url 'gallery:index' folder.id %}">{{ folder.caption }}</a></p>
 						</td>
 
 					{% endfor %}

@@ -12,11 +12,30 @@ def getPicturesFromFolder(folder, context):
     thumbfolder_path = settings.SG_THUMBS_PATH + folder.folderpath + "/"
     try:
         piclist = listdir(picfolder_path)
+        piclist.sort()
         context['piclist'] = piclist
     except (IOError, OSError):
         return False, "Path %s not found." % (picfolder_path)
     try:
         thumblist = listdir(thumbfolder_path)
+        thumblist.sort()
+        # compare pics and thumbs and check if we need to create thumbs
+        if len(piclist) != len(thumblist):
+            for pic in piclist:
+                for thumb in thumblist:
+                    if pic in thumb:
+                        break
+                    else:
+                        if thumblist.index(thumb) == (len(thumblist) - 1):
+                            picpath = picfolder_path + pic
+                            thumbpath = thumbfolder_path + "thumb_" + pic
+                            retval = system("convert \"%s\" -resize %sx%s -quality %s \"%s\"" % (picpath, folder.thumbSizeX,
+                                                                               folder.thumbSizeY,
+                                                                               folder.thumbQuality, thumbpath))
+                            if retval != 0:
+                                return False, "Error while generating thumbnails."
+        thumblist = listdir(thumbfolder_path)
+        thumblist.sort()
         context['thumblist'] = thumblist
         return True, ""
     except (IOError, OSError):
@@ -34,6 +53,7 @@ def getPicturesFromFolder(folder, context):
             if retval != 0:
                 return False, "Error while generating thumbnails."
         thumblist = listdir(thumbfolder_path)
+        thumblist.sort()
         context['thumblist'] = thumblist
         return True, ""
 
