@@ -72,4 +72,29 @@ def index(request, folder_id=None):
     return render(request, 'gallery/index.html', context)
 
 def browse(request, folder_id=None, image=None):
-    return HttpResponseNotFound("")
+    context = {}
+    if folder_id is not None:
+        folder = Folder.objects.get(id__exact=folder_id)
+        if folder is not None and folder.isAlbum:
+            context['folder'] = folder
+            retval, errorstring = getPicturesFromFolder(folder, context)
+            if not retval:
+                return HttpResponseNotFound("%s" % (errorstring))
+            if not image in context['piclist']:
+                return HttpResponseNotFound("Image not found in folder.")
+            context['image'] = image
+            context['first'] = context['piclist'][0]
+            context['last'] = context['piclist'][-1]
+            if context['piclist'].index(image) != 0:
+                context['previous'] = context['piclist'][context['piclist'].index(image) - 1]
+            else:
+                context['previous'] = context['piclist'][0]
+            if context['piclist'][-1] != image:
+                context['next'] = context['piclist'][context['piclist'].index(image) + 1]
+            else:
+                context['next'] = context['piclist'][-1]
+            return render(request, 'gallery/browse.html', context)
+        else:
+            return HttpResponseNotFound("Folder does not exist or is not an album.")
+    else:
+        return HttpResponseNotFound("No folder given.")

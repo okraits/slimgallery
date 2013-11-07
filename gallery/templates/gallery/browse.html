@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}<h4 class="title">Slimgallery picture gallery</h4>{% endblock %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+	{% if folder and folder.isAlbum and image %}
+
+	<div align="center">
+
+		<img src="{% static "user/"|add:folder.folderpath|add:"/"|add:image %}" alt="{{ image }}" width="800" height="600"/>
+		<p>{{ image }}</p>
+
+		<p>
+			<a href="{% url 'gallery:browse' folder.id first %}"><img class="ico" src="{% static "gallery/first.png" %}" alt="first.png"/></a>
+			<a href="{% url 'gallery:browse' folder.id previous %}"><img class="ico" src="{% static "gallery/previous.png" %}" alt="previous.png"/></a>
+			<a href="{% url 'gallery:index' folder.id %}"><img class="ico" src="{% static "gallery/up.png" %}" alt="up.png"/></a>
+			<a href="{% url 'gallery:browse' folder.id next %}"><img class="ico" src="{% static "gallery/next.png" %}" alt="next.png"/></a>
+			<a href="{% url 'gallery:browse' folder.id last %}"><img class="ico" src="{% static "gallery/last.png" %}" alt="last.png"/></a>
+		</p>
+		
+	</div>
+
+	{% endif %}
+
+{% endblock %}
