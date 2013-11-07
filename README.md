@@ -3,21 +3,41 @@
 ## Contents:
 
 1. Overview
-2. License
-3. Authorship, feedback, questions and contributions
+2. Requirements
+3. Installation
+4. License
+5. Authorship, feedback, questions and contributions
 
 ### 1. Overview
 
-Some day this might be a slim gallery for the django webframework.
+slimgallery is, as the name suggests, a slim and simple web gallery for the django webframework.
 
-### 2. License
+Currently it provides the following features:
+
+- generation of a web image gallery from folders with image files
+- generation of thumbnails in a userdefined size
+- several properties can be set on a per folder basis (folder name, thumb size and quality, pics per row)
+- easy navigation through the gallery
+
+### 2. Requirements
+
+slimgallery has the following requirements:
+
+- django >= 1.5
+- convert (imagemagick)
+
+### 3. Installation
+
+TODO
+
+### 4. License
 
 This software is released under the terms of the
 GNU General Public License v2:
 
 [http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
 
-### 3. Authorship, feedback, questions and contributions
+### 5. Authorship, feedback, questions and contributions
 
 There is a git repository available at github:
 
