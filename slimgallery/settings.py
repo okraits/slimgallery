@@ -159,6 +159,16 @@ LOGGING = {
     }
 }
 
-# this should be replaced by a media path
+# slimgallery customization settings
+
+# the staticfiles path should be replaced by a media path
 SG_UPLOAD_PATH = STATICFILES_DIRS[0] + 'user/'
 SG_THUMBS_PATH = STATICFILES_DIRS[0] + 'thumbs/'
+
+SG_USE_FS_HIERARCHY = False
+
+SG_THUMB_SIZE_X = 150
+SG_THUMB_SIZE_Y = 120
+
+SG_THUMB_QUALITY = 80
+SG_PICS_PER_ROW = 5
