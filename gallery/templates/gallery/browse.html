@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}<h4 class="title">Slimgallery picture gallery</h4>{% endblock %}
-
 {% load staticfiles %}
 
 {% block content %}
 
 	{% if folder and folder.isAlbum and image %}
+	
+	<h4 class="title">{% if folder %}{{ folder.caption }}{% else %}Slimgallery{% endif %}</h4>
 
 	<div align="center">
 
