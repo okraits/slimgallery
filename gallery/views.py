@@ -10,6 +10,7 @@ from os import listdir, mkdir, system
 def getPicturesFromFolder(folder, context):
     picfolder_path = settings.SG_UPLOAD_PATH + folder.folderpath + "/"
     thumbfolder_path = settings.SG_THUMBS_PATH + folder.folderpath + "/"
+    # get piclist and thumblist
     try:
         piclist = listdir(picfolder_path)
         piclist.sort()
@@ -26,7 +27,9 @@ def getPicturesFromFolder(folder, context):
                     if pic in thumb:
                         break
                     else:
+                        # no thumb for this pic found in thumblist
                         if thumblist.index(thumb) == (len(thumblist) - 1):
+                            # create thumb
                             picpath = picfolder_path + pic
                             thumbpath = thumbfolder_path + "thumb_" + pic
                             retval = system("convert \"%s\" -resize %sx%s -quality %s \"%s\"" % (picpath, folder.thumbSizeX,
@@ -39,12 +42,13 @@ def getPicturesFromFolder(folder, context):
         context['thumblist'] = thumblist
         return True, ""
     except (IOError, OSError):
-        # no thumbs found for this folder - we have to generate them
+        # no thumbfolder found for this picfolder => create it
         try:
             mkdir(thumbfolder_path)
         except (IOError, OSError):
             return False, "Error while creating thumbnail folder."
         for pic in piclist:
+            # create thumbs for this picfolder
             picpath = picfolder_path + pic
             thumbpath = thumbfolder_path + "thumb_" + pic
             retval = system("convert \"%s\" -resize %sx%s -quality %s \"%s\"" % (picpath, folder.thumbSizeX,
@@ -62,11 +66,13 @@ def index(request, folder_id=None):
     if folder_id is not None:
         folder = Folder.objects.get(id__exact=folder_id)
     if folder_id is not None and folder is not None and folder.isAlbum:
+        # folder is valid and an album => get pic- and thumblist
         context['folder'] = folder
         retval, errorstring = getPicturesFromFolder(folder, context)
         if not retval:
             return HttpResponseNotFound("%s" % (errorstring))
     else:
+        # folder is not an album => get folderlist
         folder_list = Folder.objects.filter(parentfolder=folder_id)
         context['folder_list'] = folder_list
     return render(request, 'gallery/index.html', context)
@@ -76,6 +82,7 @@ def browse(request, folder_id=None, image=None):
     if folder_id is not None:
         folder = Folder.objects.get(id__exact=folder_id)
         if folder is not None and folder.isAlbum:
+            # render a page with a single image in full size
             context['folder'] = folder
             retval, errorstring = getPicturesFromFolder(folder, context)
             if not retval:
@@ -83,8 +90,10 @@ def browse(request, folder_id=None, image=None):
             if not image in context['piclist']:
                 return HttpResponseNotFound("Image not found in folder.")
             context['image'] = image
+            # store names of the first and last image to jump to the beginning and the end:
             context['first'] = context['piclist'][0]
             context['last'] = context['piclist'][-1]
+            # store names of the previous and next image to jump forth and back:
             if context['piclist'].index(image) != 0:
                 context['previous'] = context['piclist'][context['piclist'].index(image) - 1]
             else:
