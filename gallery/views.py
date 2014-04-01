@@ -5,11 +5,23 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from gallery.models import Folder
 from django.conf import settings
-from os import listdir, mkdir, system
+from os import listdir, makedirs, system
 
 def getPicturesFromFolder(folder, context):
-    picfolder_path = settings.SG_UPLOAD_PATH + folder.folderpath + "/"
-    thumbfolder_path = settings.SG_THUMBS_PATH + folder.folderpath + "/"
+    # generate path to the top folder
+    current = folder
+    root_path = ""
+    while current.parentfolder is not None:
+        root_path = current.parentfolder.folderpath + "/" + root_path
+        current = current.parentfolder
+    # put paths together
+    picfolder_path = settings.SG_UPLOAD_PATH + root_path + folder.folderpath + "/"
+    thumbfolder_path = settings.SG_THUMBS_PATH + root_path + folder.folderpath + "/"
+    # path strings for templates
+    html_picfolder_path = "user/" + root_path + folder.folderpath + "/"
+    html_thumbfolder_path = "thumbs/" + root_path + folder.folderpath + "/"
+    context['picfolder_path'] = html_picfolder_path
+    context['thumbfolder_path'] = html_thumbfolder_path
     # get piclist and thumblist
     try:
         piclist = listdir(picfolder_path)
@@ -44,7 +56,7 @@ def getPicturesFromFolder(folder, context):
     except (IOError, OSError):
         # no thumbfolder found for this picfolder => create it
         try:
-            mkdir(thumbfolder_path)
+            makedirs(thumbfolder_path)
         except (IOError, OSError):
             return False, "Error while creating thumbnail folder."
         for pic in piclist:
