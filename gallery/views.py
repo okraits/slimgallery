@@ -65,9 +65,10 @@ def index(request, folder_id=None):
     context = {}
     if folder_id is not None:
         folder = Folder.objects.get(id__exact=folder_id)
+    if folder_id is not None and folder is not None:
+        context['folder'] = folder
     if folder_id is not None and folder is not None and folder.isAlbum:
         # folder is valid and an album => get pic- and thumblist
-        context['folder'] = folder
         retval, errorstring = getPicturesFromFolder(folder, context)
         if not retval:
             return HttpResponseNotFound("%s" % (errorstring))

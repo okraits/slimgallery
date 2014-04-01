@@ -32,8 +32,6 @@
 
 			</table>
 
-			<p align="center"><a href="{% url 'gallery:index' %}"><img class="ico" src="{% static "gallery/up.png" %}" alt="up.png"/></a></p>
-
 		{% endif %}
 
 	{% else %}
@@ -60,6 +58,14 @@
 
 		{% endif %}
 		
+	{% endif %}
+	
+	{% if folder %}
+		{% if folder.parentfolder %}
+			<p align="center"><a href="{% url 'gallery:index' folder.parentfolder.id %}"><img class="ico" src="{% static "gallery/up.png" %}" alt="up.png"/></a></p>
+		{% else %}
+			<p align="center"><a href="{% url 'gallery:index' %}"><img class="ico" src="{% static "gallery/up.png" %}" alt="up.png"/></a></p>
+		{% endif %}
 	{% endif %}
 
 {% endblock %}
